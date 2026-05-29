@@ -181,7 +181,7 @@ function Home() {
         <motion.div
           style={{
             position: 'absolute', inset: 0,
-            backgroundImage: 'url("/Article-1.jpg")',
+            backgroundImage: `url("${import.meta.env.BASE_URL}Article-1.jpg")`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             y: heroY,
