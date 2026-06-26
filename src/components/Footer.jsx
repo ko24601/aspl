@@ -6,7 +6,7 @@ import TikTokIcon from './TikTokIcon';
 
 const DISCORD   = 'https://discord.gg/cnqnmX8cEm';
 const TIKTOK    = 'https://www.tiktok.com/@aspl_acc_liga';
-const TWITCH    = 'https://twitch.tv';
+const TWITCH    = 'https://www.twitch.tv/aspl01';
 const YOUTUBE   = 'https://youtube.com';
 const INSTAGRAM = 'https://www.instagram.com/aspl_racing_series';
 
