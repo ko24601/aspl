@@ -10,7 +10,7 @@
       "community": "Comunidad"
     },
     "ticker": {
-      "season": "Inscripciones de la Temporada 4 abiertas — pilotos de PS5 y Xbox bienvenidos",
+      "season": "Inscripciones de la Temporada 2 abiertas — pilotos de PS5 y Xbox bienvenidos",
       "tiktok": "Síguenos en TikTok @aspl_acc_liga",
       "discord": "Únete al paddock — discord.gg/cnqnmX8cEm",
       "racing": "Racing profesional GT3 en consola — solo competencia limpia"
@@ -18,7 +18,7 @@
   },
   "hero": {
     "title1": "CONSTRUYENDO EL FUTURO DEL",
-    "subtitle": "La Assetto Series Pro League es una liga de consola ACC competitiva en PlayStation 5 y Xbox Series X|S. Construida sobre el racing GT3 limpio y el desarrollo de pilotos a largo plazo — motorsport profesional, nivel consola.",
+    "subtitle": "La Advanced Simracing Pro League es una liga de consola ACC competitiva en PlayStation 5 y Xbox Series X|S. Construida sobre el racing GT3 limpio y el desarrollo de pilotos a largo plazo — motorsport profesional, nivel consola.",
     "cta": {
       "discord": "UNIRSE A DISCORD",
       "schedule": "CALENDARIO DE CARRERAS"
@@ -36,15 +36,15 @@
     "heading": "EL ESTÁNDAR PROFESIONAL",
     "card": {
       "heading": "VISIÓN Y ETHOS DEL PADDOCK",
-      "p1": "La <strong>Assetto Series Pro League (ASPL)</strong> es una liga de carreras de consola de Assetto Corsa Competizione centrada en las carreras de liga profesional, la competencia limpia, el desarrollo de pilotos a largo plazo y una fuerte atmósfera de comunidad.",
+      "p1": "La <strong>Advanced Simracing Pro League (ASPL)</strong> es una liga de carreras de consola de Assetto Corsa Competizione centrada en las carreras de liga profesional, la competencia limpia, el desarrollo de pilotos a largo plazo y una fuerte atmósfera de comunidad.",
       "p2": "Principalmente basada en <strong>PlayStation 5 y Xbox Series X|S</strong>, ASPL opera en la clase GT3. Nuestro objetivo es crear una de las ligas de consola ACC más competitivas y profesionales, mientras seguimos siendo accesibles para pilotos más nuevos y en desarrollo.",
       "p3": "Queremos una identidad de motorsport serio similar a las organizaciones de carreras GT del mundo real — limpia, premium y profesional. No un club de gaming. Una <strong>liga de carreras</strong>."
     },
     "pillars": {
-      "gt3": { "title": "RACING CLASE GT3", "desc": "La clase más competitiva de ACC — Porsche, Ferrari, BMW, Aston Martin y más. Formatos multi-clase con actualizaciones reales de Balance de Rendimiento." },
+      "gt3": { "title": "RACING CLASE GT3", "desc": "Ferrari 296 GT3, Mercedes-AMG GT3 Evo y Aston Martin V8 Vantage AMR GT3. Grid fijo con actualizaciones reales de Balance de Rendimiento." },
       "dev": { "title": "DESARROLLO DE PILOTOS", "desc": "Entrenadores de equipo, sesiones de telemetría, guías de circuito y mentoría. Desarrollamos pilotos a largo plazo, no solo para una temporada." },
-      "clean": { "title": "ESTÁNDARES DE RACING LIMPIO", "desc": "Proceso de revisión de incidentes gestionado a través de nuestro canal de comisarios de Discord. Se revisan imágenes de cámara de a bordo, se aplican penalizaciones justas — consistente y transparente." },
-      "broadcast": { "title": "CARRERAS EN EMISIÓN", "desc": "Transmisiones en vivo de Twitch con overlays, comentarios y cámaras de pilotos. Highlights subidos a YouTube. Síguenos en TikTok para clips." }
+      "clean": { "title": "ESTÁNDARES DE RACING LIMPIO", "desc": "Proceso de revisión de incidentes gestionado a través de nuestro canal de comisarios de Discord. Penalizaciones justas y transparentes." },
+      "broadcast": { "title": "CARRERAS EN EMISIÓN", "desc": "Transmisiones en vivo de Twitch con overlays, comentarios y cámaras de pilotos. Highlights subidos a YouTube." }
     }
   },
   "series": {
@@ -53,32 +53,83 @@
     "team": {
       "badge": "SÁBADOS",
       "title": "ACC TEAM SERIES",
-      "desc": "El campeonato insignia de ASPL. Equipos de 2 a 4 pilotos construyen clasificaciones de constructores a lo largo de la temporada. Estrategia de alta intensidad, paradas obligatorias en boxes y campos multi-clase hacen de este el evento premium del sábado por la noche.",
-      "bullets": ["Formatos de sprint y carreras más largas", "Ventanas de parada en boxes obligatorias", "Clasificación del campeonato de constructores", "Multi-división con ascenso/descenso"]
+      "desc": "El campeonato insignia de ASPL. Los equipos compiten juntos durante la temporada acumulando puntos de constructores. El día de carrera es el sábado — Práctica a las 18:30, Clasificación a las 19:00, salida aprox. 19:20.",
+      "bullets": ["60 minutos de duración de carrera", "Paradas en boxes obligatorias", "Clasificación del campeonato de constructores", "Pilotos de PS5 y Xbox juntos"]
     },
     "solo": {
       "badge": "MIÉRCOLES",
       "title": "ACC SOLO SPRINT SERIES",
-      "desc": "Piloto puro contra piloto — sin restricciones de fabricante, sin dinámicas de equipo. La Solo Series es donde brilla el arte de pilotar individual. Noches de miércoles, abierto a todos los pilotos registrados de ASPL de todas las divisiones.",
-      "bullets": ["Clasificación corta + formato de doble sprint", "Tabla de campeonato exclusiva de pilotos", "Sistema de ascenso y descenso", "Pilotos de PS5 y Xbox juntos"]
+      "desc": "Piloto puro contra piloto en un grid fijo de tres coches: Ferrari 296 GT3, Mercedes-AMG GT3 Evo y Aston Martin V8 Vantage AMR GT3. Noches de miércoles, abierto a todos los pilotos registrados de ASPL.",
+      "bullets": ["Grid fijo: Ferrari 296 GT3 · Mercedes-AMG GT3 Evo · Aston Martin V8 Vantage AMR GT3", "60 minutos de duración de carrera", "Tabla de campeonato exclusiva de pilotos", "Pilotos de PS5 y Xbox juntos"]
     },
     "endurance": {
-      "badge": "EVENTOS ESPECIALES",
+      "badge": "PLANEADO · PRÓXIMAMENTE",
       "title": "ENDURANCE CUP",
-      "desc": "La prueba definitiva de ASPL — duraciones de carrera más largas, conducción nocturna, clima dinámico e intercambios de pilotos. Los eventos de resistencia se programan como rondas especiales con puntos de campeonato mejorados y cobertura de transmisión completa.",
-      "bullets": ["Duraciones de carrera de 3 a 6+ horas", "Transiciones de día a noche", "Intercambio de pilotos y estrategia de combustible", "Valor de puntos aumentado"]
+      "desc": "La prueba definitiva de ASPL — duraciones de carrera más largas, conducción nocturna, clima dinámico e intercambios de pilotos. El Endurance Cup está actualmente en planificación y se anunciará como un evento especial futuro.",
+      "bullets": ["Duraciones de carrera más largas planeadas", "Transiciones de día a noche", "Intercambio de pilotos y estrategia de combustible", "Valor de puntos aumentado"]
     },
-    "promo": {
-      "title": "SISTEMA DE ASCENSO Y DESCENSO DE DIVISIÓN",
-      "desc": "ASPL opera una jerarquía de múltiples niveles (Pro, Pro-Am y Am). Los mejores clasificados suben cada temporada, mientras que los puestos inferiores son descendidos, garantizando partidas de lobby ferozmente competitivas.",
+    "signup": {
+      "title": "¿QUIERES UNIRTE AL GRID?",
+      "desc": "El acceso es mediante una carrera de prueba. Los únicos requisitos son la consistencia y la pilotaje — sin tiempos de vuelta fijos, sin SR mínimo. Únete a nuestro Discord y te pondremos en pista.",
       "cta": "💬 ÚNETE A DISCORD PARA INSCRIBIRTE"
     }
+  },
+  "teams": {
+    "sub": "GRID DE CONSTRUCTORES",
+    "heading": "LOS EQUIPOS",
+    "card": {
+      "title": "INSCRIPCIÓN DE EQUIPO",
+      "desc": "Los equipos compiten en la ACC Team Series con 2–4 pilotos por inscripción. Los puntos de constructor se acumulan a lo largo de la temporada."
+    },
+    "list": [
+      { "name": "Chronos Motorsport", "short": "CHR" },
+      { "name": "Chronos Omega Racing", "short": "COR" },
+      { "name": "Chronos Academy Motorsport", "short": "CAM" }
+    ]
+  },
+  "schedule": {
+    "sub": "DÍA DE CARRERA",
+    "heading": "HORARIO DEL DÍA DE CARRERA",
+    "solo": {
+      "day": "MIÉRCOLES — SOLO SERIES",
+      "rows": [
+        { "time": "20:00", "event": "Práctica" },
+        { "time": "20:30", "event": "Clasificación" },
+        { "time": "~20:50", "event": "Salida" },
+        { "time": "60 min", "event": "Duración de Carrera" }
+      ]
+    },
+    "team": {
+      "day": "SÁBADO — TEAM SERIES",
+      "rows": [
+        { "time": "18:30", "event": "Práctica" },
+        { "time": "19:00", "event": "Clasificación" },
+        { "time": "~19:20", "event": "Salida" },
+        { "time": "60 min", "event": "Duración de Carrera" }
+      ]
+    },
+    "note": "Todos los horarios son hora local (CET/CEST)."
+  },
+  "rulebook": {
+    "sub": "REGLAMENTO",
+    "heading": "REGLAMENTO Y PENALIZACIONES",
+    "desc": "ASPL opera con un conjunto claramente definido de regulaciones que cubren procedimientos de incidentes, directrices de penalizaciones, elegibilidad de vehículos y conducta deportiva. El reglamento completo está disponible para todos los pilotos registrados.",
+    "download": "DESCARGAR REGLAMENTO (PDF)",
+    "contact": "¿Preguntas sobre una penalización? Contacta a los comisarios directamente a través del canal #stewards en Discord."
   },
   "calendar": {
     "sub": "EL CALENDARIO",
     "heading": "CALENDARIO DE CARRERAS",
     "solo": { "label": "SOLO SERIES (CLIC PARA AMPLIAR)", "schedule": "MIÉRCOLES · 20:30" },
-    "team": { "label": "TEAM SERIES (CLIC PARA AMPLIAR)", "schedule": "SÁBADOS · 19:00" }
+    "team": { "label": "TEAM SERIES (CLIC PARA AMPLIAR)", "schedule": "SÁBADOS · 19:00" },
+    "table": {
+      "round": "RND",
+      "track": "CIRCUITO",
+      "country": "PAÍS",
+      "date": "FECHA",
+      "time": "HORA",
+      "series": "SERIE"
+    }
   },
   "standings": {
     "sub": "TABLAS DE CAMPEONATO",
@@ -107,14 +158,15 @@
     "stream": {
       "title": "TRANSMISIÓN EN DIRECTO",
       "click": "Haz clic para sintonizar el Stream Oficial de ASPL",
-      "upcoming": "Próxima Transmisión en Vivo: ACC Team Series (Spa-Francorchamps)",
-      "hosts": "Presentador: ASPL TV | Comentaristas: Jake Smith, Brandon Vance"
+      "upcoming": "Próxima Transmisión en Vivo: ACC Team Series",
+      "hosts": "Comentaristas: [TBC — actualizar con nombres correctos]"
     },
     "follow": { "heading": "SEGUIR Y VER" },
     "tiktok": { "desc": "Clips de carreras, adelantamientos y highlights" },
     "youtube": { "desc": "Repeticiones completas de carreras y highlight reels" },
     "twitch": { "desc": "Transmisiones de carreras en vivo con overlays" },
-    "discord": { "desc": "Únete al paddock, encuentra un equipo" }
+    "discord": { "desc": "Únete al paddock, encuentra un equipo" },
+    "instagram": { "desc": "Detrás de cámaras y contenido del fin de semana de carreras" }
   },
   "community": {
     "sub": "NOTICIAS DEL PADDOCK",
@@ -122,7 +174,7 @@
     "readMore": "LEER BOLETÍN"
   },
   "footer": {
-    "brand": { "desc": "La Assetto Series Pro League es una competitiva liga de consola ACC construida sobre el racing limpio, el desarrollo de pilotos a largo plazo y una seria identidad de motorsport — en PlayStation 5 y Xbox Series X|S." },
+    "brand": { "desc": "La Advanced Simracing Pro League es una competitiva liga de consola ACC construida sobre el racing limpio, el desarrollo de pilotos a largo plazo y una seria identidad de motorsport — en PlayStation 5 y Xbox Series X|S." },
     "nav": {
       "heading": "NAVEGACIÓN",
       "links": {
@@ -140,15 +192,16 @@
       "discord": "Servidor de Discord",
       "tiktok": "TikTok @aspl_acc_liga",
       "twitch": "Transmisiones en Vivo de Twitch",
-      "youtube": "Highlights de YouTube"
+      "youtube": "Highlights de YouTube",
+      "instagram": "Instagram"
     },
     "join": {
       "heading": "ÚNETE AL PADDOCK",
-      "desc": "Ya seas un piloto de sim élite o estés empezando, ASPL tiene un lugar para ti. Únete a nuestro Discord para incorporarte, encontrar un equipo y competir en la mejor parrilla de consola ACC.",
+      "desc": "El acceso es mediante una carrera de prueba — solo buscamos consistencia y pilotaje. Únete a nuestro Discord para incorporarte, encontrar un equipo y competir en la mejor parrilla de consola ACC.",
       "discord": "💬 UNIRSE A DISCORD"
     },
     "sponsors": "Patrocinadores Oficiales",
     "admin": "Panel de Administración",
-    "copyright": "© {{year}} Assetto Series Pro League. Todos los derechos reservados. No afiliado con Kunos Simulazioni ni 505 Games."
+    "copyright": "© {{year}} Advanced Simracing Pro League. Todos los derechos reservados. No afiliado con Kunos Simulazioni ni 505 Games."
   }
 }

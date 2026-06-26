@@ -203,10 +203,10 @@ function Navbar() {
             <img src={asplLogo} alt="ASPL Logo" style={{ height: '36px', width: 'auto', filter: 'drop-shadow(0 0 6px rgba(225,6,0,0.5))' }} />
             <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
               <span style={{ fontFamily: 'var(--font-display)', fontSize: '1.25rem', fontWeight: 900, letterSpacing: '2px', color: '#fff', textTransform: 'uppercase' }}>
-                ASPL<span style={{ color: 'var(--accent-red)' }}> LEAGUE</span>
+                ASPL<span style={{ color: 'var(--accent-red)' }}> RACING</span>
               </span>
               <span style={{ fontSize: '0.55rem', letterSpacing: '2.5px', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600, marginTop: '2px' }}>
-                ACC Console Esports
+                Advanced Simracing Pro League
               </span>
             </div>
           </Link>
