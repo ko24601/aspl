@@ -139,12 +139,12 @@ function Home() {
   ];
 
   const MANAGEMENT = [
-    { name: 'Djlowtom',     role: 'Liga Owner',                        duties: ['Organisation & Management', 'Discord & Verwaltung', 'Fahrerbetreuung', 'Ankündigungen', 'Unterstützung aller Bereiche'] },
-    { name: 'Luke_Mei',     role: 'Liga Owner',                        duties: ['Wetterberichte (wöchentlich)', 'Unterstützung der Liga', 'Allgemeine Unterstützung'] },
-    { name: 'toxictommy',   role: 'Rennleitung & Verwaltung',          duties: ['Ranglisten & Tabellen', 'Teammanagement', 'Rennorganisation', 'Fahrer-/Teamkoordination', 'Nachrichten & Kommunikation'] },
-    { name: 'Chillo',       role: 'Community & Fahrerbetreuung',       duties: ['Community & Mitgliederbetreuung', 'Ansprechpartner für Fahrer', 'Unterstützung neuer Fahrer', 'Simracing- & Lenkrad-Themen'] },
-    { name: 'iCrank',       role: 'Server & Endurance Management',     duties: ['ACC Server & Einstellungen', 'GPortal & technische Verwaltung', 'Endurance-Series Management', 'Technische Unterstützung'] },
-    { name: 'Darby',        role: 'Fahrerentwicklung & Medien',        duties: ['Testrennen & Fahrerbewertung', 'Trainingsprogramme für Fahrer', 'Rennbilder, Clips & Highlights', 'Unterstützung Kommentarbereich'] },
+    { name: 'Djlowtom',     role: 'League Owner',                      duties: ['Organisation & Management', 'Discord Administration', 'Driver Support', 'Announcements', 'Support across all areas'] },
+    { name: 'Luke_Mei',     role: 'League Owner',                      duties: ['Weather Reports (weekly)', 'League Support', 'General Assistance'] },
+    { name: 'toxictommy',   role: 'Race Direction & Administration',   duties: ['Rankings & Standings', 'Team Management', 'Race Organisation', 'Driver & Team Coordination', 'News & Communication'] },
+    { name: 'Chillo',       role: 'Community & Driver Support',        duties: ['Community & Member Care', 'Point of Contact for Drivers', 'Support for New Drivers', 'Sim Racing & Wheel Topics'] },
+    { name: 'iCrank',       role: 'Server & Endurance Management',     duties: ['ACC Server & Settings', 'GPortal & Technical Administration', 'Endurance Series Management', 'Technical Support'] },
+    { name: 'Darby',        role: 'Driver Development & Media',        duties: ['Test Races & Driver Evaluation', 'Driver Training Programmes', 'Race Photos, Clips & Highlights', 'Commentary Support'] },
   ];
 
   useEffect(() => {
@@ -427,7 +427,7 @@ function Home() {
       {/* ── LEAGUE MANAGEMENT ──────────────────────────────────────────────── */}
       <RevealSection id="management" className="content-section">
         <div className="section-header">
-          <div className="sub">ASPL ACC KONSOLENLIGA</div>
+          <div className="sub">ASPL ACC CONSOLE LEAGUE</div>
           <h2>League <span style={{ color: 'var(--accent-red)' }}>Management</span></h2>
         </div>
         <motion.div
