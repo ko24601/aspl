@@ -4,16 +4,17 @@ import { useTranslation } from 'react-i18next';
 import { DatabaseContext } from '../DatabaseContext';
 import {
   Trophy, Calendar, Award, Users, ShieldAlert, Clock, ChevronRight,
-  Play, Tv, Disc, Search
+  Play, Tv, Disc, Search, Download, BookOpen
 } from 'lucide-react';
 import soloCalendarImg  from '../assets/solo-calendar.png';
 import teamCalendarImg  from '../assets/team-calendar.png';
 import TikTokIcon from '../components/TikTokIcon';
 
-const DISCORD = 'https://discord.gg/cnqnmX8cEm';
-const TIKTOK  = 'https://www.tiktok.com/@aspl_acc_liga';
-const TWITCH  = 'https://twitch.tv';
-const YOUTUBE = 'https://youtube.com';
+const DISCORD  = 'https://discord.gg/cnqnmX8cEm';
+const TIKTOK   = 'https://www.tiktok.com/@aspl_acc_liga';
+const TWITCH   = 'https://twitch.tv';
+const YOUTUBE  = 'https://youtube.com';
+const INSTAGRAM = 'https://instagram.com'; // ← update with real handle when confirmed
 
 // ── Shared animation variants ──────────────────────────────────────────────────
 const container = {
@@ -106,35 +107,51 @@ function Home() {
   const [timeLeft, setTimeLeft] = useState(null);
   const [nextEvent, setNextEvent] = useState(null);
 
-  const calendarEvents  = dbData.calendar       || [];
   const driverStandings = dbData.driverStandings || [];
   const teamStandings   = dbData.teamStandings   || [];
   const newsFeed        = dbData.news            || [];
 
-  // Countdown: next race pulled from the published Season 2 calendar images
+  // Season 2 calendar — times are LOCAL (CET/CEST = UTC+2 in summer)
+  // Stored as UTC by subtracting 2 hours so countdown is correct
   const SEASON2_RACES = [
-    { track: 'Imola',          country: 'Italy',        date: '2026-06-10', time: '20:30 UTC', series: 'SOLO' },
-    { track: 'Imola',          country: 'Italy',        date: '2026-06-13', time: '19:00 UTC', series: 'TEAM' },
-    { track: 'Barcelona',      country: 'Spain',        date: '2026-06-17', time: '20:30 UTC', series: 'SOLO' },
-    { track: 'Barcelona',      country: 'Spain',        date: '2026-06-20', time: '19:00 UTC', series: 'TEAM' },
-    { track: 'Red Bull Ring',  country: 'Austria',      date: '2026-06-24', time: '20:30 UTC', series: 'SOLO' },
-    { track: 'Red Bull Ring',  country: 'Austria',      date: '2026-06-27', time: '19:00 UTC', series: 'TEAM' },
-    { track: 'Laguna Seca',    country: 'USA',          date: '2026-07-01', time: '20:30 UTC', series: 'SOLO' },
-    { track: 'Laguna Seca',    country: 'USA',          date: '2026-07-04', time: '19:00 UTC', series: 'TEAM' },
-    { track: 'Nürburgring GP', country: 'Germany',      date: '2026-07-08', time: '20:30 UTC', series: 'SOLO' },
-    { track: 'Nürburgring GP', country: 'Germany',      date: '2026-07-11', time: '19:00 UTC', series: 'TEAM' },
-    { track: 'Donington Park', country: 'UK',           date: '2026-07-29', time: '20:30 UTC', series: 'SOLO' },
-    { track: 'Donington Park', country: 'UK',           date: '2026-08-01', time: '19:00 UTC', series: 'TEAM' },
-    { track: 'Mount Panorama', country: 'Australia',    date: '2026-08-05', time: '20:30 UTC', series: 'SOLO' },
-    { track: 'Mount Panorama', country: 'Australia',    date: '2026-08-08', time: '19:00 UTC', series: 'TEAM' },
-    { track: 'Monza',          country: 'Italy',        date: '2026-08-12', time: '20:30 UTC', series: 'SOLO' },
-    { track: 'Monza',          country: 'Italy',        date: '2026-08-15', time: '19:00 UTC', series: 'TEAM' },
+    { round: 1,  track: 'Imola',          country: '🇮🇹 Italy',       date: '2026-06-10', localTime: '20:30', series: 'SOLO' },
+    { round: 1,  track: 'Imola',          country: '🇮🇹 Italy',       date: '2026-06-13', localTime: '19:00', series: 'TEAM' },
+    { round: 2,  track: 'Barcelona',      country: '🇪🇸 Spain',       date: '2026-06-17', localTime: '20:30', series: 'SOLO' },
+    { round: 2,  track: 'Barcelona',      country: '🇪🇸 Spain',       date: '2026-06-20', localTime: '19:00', series: 'TEAM' },
+    { round: 3,  track: 'Red Bull Ring',  country: '🇦🇹 Austria',     date: '2026-06-24', localTime: '20:30', series: 'SOLO' },
+    { round: 3,  track: 'Red Bull Ring',  country: '🇦🇹 Austria',     date: '2026-06-27', localTime: '19:00', series: 'TEAM' },
+    { round: 4,  track: 'Laguna Seca',    country: '🇺🇸 USA',         date: '2026-07-01', localTime: '20:30', series: 'SOLO' },
+    { round: 4,  track: 'Laguna Seca',    country: '🇺🇸 USA',         date: '2026-07-04', localTime: '19:00', series: 'TEAM' },
+    { round: 5,  track: 'Nürburgring GP', country: '🇩🇪 Germany',     date: '2026-07-08', localTime: '20:30', series: 'SOLO' },
+    { round: 5,  track: 'Nürburgring GP', country: '🇩🇪 Germany',     date: '2026-07-11', localTime: '19:00', series: 'TEAM' },
+    { round: 6,  track: 'Donington Park', country: '🇬🇧 UK',          date: '2026-07-29', localTime: '20:30', series: 'SOLO' },
+    { round: 6,  track: 'Donington Park', country: '🇬🇧 UK',          date: '2026-08-01', localTime: '19:00', series: 'TEAM' },
+    { round: 7,  track: 'Mount Panorama', country: '🇦🇺 Australia',   date: '2026-08-05', localTime: '20:30', series: 'SOLO' },
+    { round: 7,  track: 'Mount Panorama', country: '🇦🇺 Australia',   date: '2026-08-08', localTime: '19:00', series: 'TEAM' },
+    { round: 8,  track: 'Monza',          country: '🇮🇹 Italy',       date: '2026-08-12', localTime: '20:30', series: 'SOLO' },
+    { round: 8,  track: 'Monza',          country: '🇮🇹 Italy',       date: '2026-08-15', localTime: '19:00', series: 'TEAM' },
+  ];
+
+  const TEAMS = [
+    { name: 'Chronos Motorsport',          short: 'CHR', color: '#e10600' },
+    { name: 'Chronos Omega Racing',        short: 'COR', color: '#ff8c00' },
+    { name: 'Chronos Academy Motorsport',  short: 'CAM', color: '#0070c0' },
+  ];
+
+  const MANAGEMENT = [
+    { name: 'Djlowtom',     role: 'Liga Owner',                        duties: ['Organisation & Management', 'Discord & Verwaltung', 'Fahrerbetreuung', 'Ankündigungen', 'Unterstützung aller Bereiche'] },
+    { name: 'Luke_Mei',     role: 'Liga Owner',                        duties: ['Wetterberichte (wöchentlich)', 'Unterstützung der Liga', 'Allgemeine Unterstützung'] },
+    { name: 'toxictommy',   role: 'Rennleitung & Verwaltung',          duties: ['Ranglisten & Tabellen', 'Teammanagement', 'Rennorganisation', 'Fahrer-/Teamkoordination', 'Nachrichten & Kommunikation'] },
+    { name: 'Chillo',       role: 'Community & Fahrerbetreuung',       duties: ['Community & Mitgliederbetreuung', 'Ansprechpartner für Fahrer', 'Unterstützung neuer Fahrer', 'Simracing- & Lenkrad-Themen'] },
+    { name: 'iCrank',       role: 'Server & Endurance Management',     duties: ['ACC Server & Einstellungen', 'GPortal & technische Verwaltung', 'Endurance-Series Management', 'Technische Unterstützung'] },
+    { name: 'Darby',        role: 'Fahrerentwicklung & Medien',        duties: ['Testrennen & Fahrerbewertung', 'Trainingsprogramme für Fahrer', 'Rennbilder, Clips & Highlights', 'Unterstützung Kommentarbereich'] },
   ];
 
   useEffect(() => {
     const now = Date.now();
+    // Parse local times as CEST (UTC+2) by appending +02:00
     const upcoming = SEASON2_RACES
-      .map(r => ({ ...r, ts: Date.parse(`${r.date}T${r.time.replace(' UTC','')}:00Z`) }))
+      .map(r => ({ ...r, ts: Date.parse(`${r.date}T${r.localTime}:00+02:00`) }))
       .filter(r => r.ts > now)
       .sort((a, b) => a.ts - b.ts);
 
@@ -157,7 +174,9 @@ function Home() {
     return () => clearInterval(timer);
   }, []);
 
-  const filteredCalendar = calendarFilter === 'ALL' ? calendarEvents : calendarEvents.filter(e => e.championship === calendarFilter);
+  const filteredCalendar = calendarFilter === 'ALL'
+    ? SEASON2_RACES
+    : SEASON2_RACES.filter(r => r.series === calendarFilter);
 
   const CountUnit = ({ val, label, accent }) => (
     <div style={{ textAlign: 'center' }}>
@@ -177,7 +196,6 @@ function Home() {
 
       {/* ── HERO ────────────────────────────────────────────────────────────── */}
       <section style={{ position: 'relative', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '120px 24px 80px', overflow: 'hidden' }}>
-        {/* Parallax bg */}
         <motion.div
           style={{
             position: 'absolute', inset: 0,
@@ -188,16 +206,12 @@ function Home() {
             scale: 1.1,
           }}
         />
-        {/* Dark overlay */}
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(5,5,8,0.45) 0%, rgba(5,5,8,0.75) 100%)', pointerEvents: 'none' }} />
-        {/* Scan line */}
         <div className="hero-scanline" />
-        {/* Speed lines */}
         <SpeedLines />
 
         <div style={{ maxWidth: '1200px', width: '100%', position: 'relative', zIndex: 10, textAlign: 'center' }}>
 
-          {/* Platform badges */}
           <motion.div
             initial="hidden" animate="show" variants={container}
             style={{ display: 'flex', justifyContent: 'center', gap: '15px', marginBottom: '24px' }}
@@ -212,7 +226,6 @@ function Home() {
             ))}
           </motion.div>
 
-          {/* Title with glitch */}
           <motion.h1
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
@@ -222,10 +235,10 @@ function Home() {
             {t('hero.title1')} <br />
             <span
               className="hero-glitch"
-              data-text="ACC CONSOLE ESPORTS"
+              data-text="ADVANCED SIMRACING PRO LEAGUE"
               style={{ color: 'var(--accent-red)', textShadow: '0 0 30px var(--accent-red-glow), 0 0 60px rgba(225,6,0,0.3)' }}
             >
-              ACC CONSOLE ESPORTS
+              ADVANCED SIMRACING PRO LEAGUE
             </span>
           </motion.h1>
 
@@ -238,7 +251,6 @@ function Home() {
             {t('hero.subtitle')}
           </motion.p>
 
-          {/* CTA buttons */}
           <motion.div
             initial="hidden" animate="show" variants={container}
             style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '16px', marginBottom: '60px' }}
@@ -276,7 +288,7 @@ function Home() {
                 <Clock size={16} /> {t('hero.countdown.title')}
               </span>
               <span style={{ background: 'var(--accent-gray)', fontSize: '0.7rem', padding: '3px 8px', fontWeight: 'bold' }}>
-                {nextEvent ? `${nextEvent.series} · ${nextEvent.track} · ${nextEvent.time}` : 'TBA'}
+                {nextEvent ? `${nextEvent.series} · ${nextEvent.track} · ${nextEvent.localTime}` : 'TBA'}
               </span>
             </div>
             {(nextEvent && timeLeft) ? (
@@ -313,18 +325,19 @@ function Home() {
             <p style={{ color: 'var(--text-secondary)', marginBottom: '16px', fontSize: '0.95rem', lineHeight: '1.8' }} dangerouslySetInnerHTML={{ __html: t('about.card.p2').replace(/<strong>/g, '<strong style="color:#fff">') }} />
             <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', lineHeight: '1.8' }} dangerouslySetInnerHTML={{ __html: t('about.card.p3').replace(/<strong>/g, '<strong style="color:#fff">') }} />
             <div style={{ display: 'flex', gap: '10px', marginTop: '20px', flexWrap: 'wrap' }}>
-              <a href={DISCORD} target="_blank" rel="noopener noreferrer" className="btn-aspl btn-aspl-secondary" style={{ padding: '10px 18px', fontSize: '0.82rem' }}>💬 Discord</a>
-              <a href={TIKTOK}  target="_blank" rel="noopener noreferrer" className="btn-aspl btn-aspl-secondary" style={{ padding: '10px 18px', fontSize: '0.82rem', display: 'inline-flex', alignItems: 'center', gap: '8px' }}><TikTokIcon size={16} /> TikTok</a>
-              <a href={TWITCH}  target="_blank" rel="noopener noreferrer" className="btn-aspl btn-aspl-secondary" style={{ padding: '10px 18px', fontSize: '0.82rem' }}>📺 Twitch</a>
-              <a href={YOUTUBE} target="_blank" rel="noopener noreferrer" className="btn-aspl btn-aspl-secondary" style={{ padding: '10px 18px', fontSize: '0.82rem' }}>📹 YouTube</a>
+              <a href={DISCORD}   target="_blank" rel="noopener noreferrer" className="btn-aspl btn-aspl-secondary" style={{ padding: '10px 18px', fontSize: '0.82rem' }}>💬 Discord</a>
+              <a href={TIKTOK}    target="_blank" rel="noopener noreferrer" className="btn-aspl btn-aspl-secondary" style={{ padding: '10px 18px', fontSize: '0.82rem', display: 'inline-flex', alignItems: 'center', gap: '8px' }}><TikTokIcon size={16} /> TikTok</a>
+              <a href={TWITCH}    target="_blank" rel="noopener noreferrer" className="btn-aspl btn-aspl-secondary" style={{ padding: '10px 18px', fontSize: '0.82rem' }}>📺 Twitch</a>
+              <a href={YOUTUBE}   target="_blank" rel="noopener noreferrer" className="btn-aspl btn-aspl-secondary" style={{ padding: '10px 18px', fontSize: '0.82rem' }}>📹 YouTube</a>
+              <a href={INSTAGRAM} target="_blank" rel="noopener noreferrer" className="btn-aspl btn-aspl-secondary" style={{ padding: '10px 18px', fontSize: '0.82rem' }}>📸 Instagram</a>
             </div>
           </motion.div>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
             {[
-              { icon: <Trophy size={32} />,      title: t('about.pillars.gt3.title'),      desc: t('about.pillars.gt3.desc') },
-              { icon: <Users size={32} />,        title: t('about.pillars.dev.title'),      desc: t('about.pillars.dev.desc') },
-              { icon: <ShieldAlert size={32} />,  title: t('about.pillars.clean.title'),    desc: t('about.pillars.clean.desc') },
+              { icon: <Trophy size={32} />,      title: t('about.pillars.gt3.title'),       desc: t('about.pillars.gt3.desc') },
+              { icon: <Users size={32} />,        title: t('about.pillars.dev.title'),       desc: t('about.pillars.dev.desc') },
+              { icon: <ShieldAlert size={32} />,  title: t('about.pillars.clean.title'),     desc: t('about.pillars.clean.desc') },
               { icon: <Tv size={32} />,           title: t('about.pillars.broadcast.title'), desc: t('about.pillars.broadcast.desc') },
             ].map((c, i) => (
               <motion.div key={i} variants={item} className="glass-card" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -353,11 +366,23 @@ function Home() {
             {[
               { num: '01', badge: t('series.team.badge'), badgeBg: 'var(--accent-red)', title: t('series.team.title'), desc: t('series.team.desc'), bullets: t('series.team.bullets', { returnObjects: true }) },
               { num: '02', badge: t('series.solo.badge'), badgeBg: 'var(--accent-gray)', badgeBorder: '1px solid var(--border-color)', title: t('series.solo.title'), desc: t('series.solo.desc'), bullets: t('series.solo.bullets', { returnObjects: true }) },
-              { num: '03', badge: t('series.endurance.badge'), badgeBg: '#d97706', title: t('series.endurance.title'), desc: t('series.endurance.desc'), bullets: t('series.endurance.bullets', { returnObjects: true }) },
+              {
+                num: '03',
+                badge: t('series.endurance.badge'),
+                badgeBg: '#374151',
+                badgeBorder: '1px solid #4b5563',
+                comingSoon: true,
+                title: t('series.endurance.title'),
+                desc: t('series.endurance.desc'),
+                bullets: t('series.endurance.bullets', { returnObjects: true })
+              },
             ].map((s, i) => (
-              <motion.div key={i} variants={item} className="glass-card" style={{ padding: '30px', position: 'relative', overflow: 'hidden' }}>
+              <motion.div key={i} variants={item} className="glass-card" style={{ padding: '30px', position: 'relative', overflow: 'hidden', opacity: s.comingSoon ? 0.75 : 1 }}>
                 <div style={{ position: 'absolute', top: '-10px', right: '-10px', fontSize: '6rem', color: 'var(--border-color)', opacity: 0.15, fontWeight: 900, fontFamily: 'var(--font-display)' }}>{s.num}</div>
-                <span style={{ background: s.badgeBg, border: s.badgeBorder, color: '#fff', fontSize: '0.7rem', padding: '4px 10px', fontWeight: 'bold', letterSpacing: '1px', textTransform: 'uppercase', display: 'inline-block', marginBottom: '16px' }}>{s.badge}</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
+                  <span style={{ background: s.badgeBg, border: s.badgeBorder, color: '#fff', fontSize: '0.7rem', padding: '4px 10px', fontWeight: 'bold', letterSpacing: '1px', textTransform: 'uppercase', display: 'inline-block' }}>{s.badge}</span>
+                  {s.comingSoon && <span style={{ fontSize: '0.65rem', color: '#9ca3af', fontStyle: 'italic' }}>in planning</span>}
+                </div>
                 <h3 style={{ fontSize: '1.5rem', color: '#fff', marginBottom: '12px' }}>{s.title}</h3>
                 <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', lineHeight: '1.6', marginBottom: '20px' }}>{s.desc}</p>
                 <ul style={{ color: 'var(--text-secondary)', fontSize: '0.8rem', paddingLeft: '20px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -367,15 +392,101 @@ function Home() {
             ))}
           </motion.div>
 
+          {/* Sign-up banner (replaces old promo/relegation box) */}
           <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={fadeUp} className="glass-card" style={{ padding: '24px', display: 'flex', flexWrap: 'wrap', gap: '20px', alignItems: 'center', justifyContent: 'space-between', borderLeft: '4px solid var(--accent-red)' }}>
             <div style={{ flex: '1 1 500px' }}>
-              <h4 style={{ color: '#fff', fontSize: '1.1rem', marginBottom: '6px' }}>{t('series.promo.title')}</h4>
-              <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
-                {t('series.promo.desc')}
-              </p>
+              <h4 style={{ color: '#fff', fontSize: '1.1rem', marginBottom: '6px' }}>{t('series.signup.title')}</h4>
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>{t('series.signup.desc')}</p>
             </div>
-            <motion.a whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} href={DISCORD} target="_blank" rel="noopener noreferrer" className="btn-aspl btn-aspl-primary" style={{ padding: '10px 20px', fontSize: '0.85rem' }}>{t('series.promo.cta')}</motion.a>
+            <motion.a whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} href={DISCORD} target="_blank" rel="noopener noreferrer" className="btn-aspl btn-aspl-primary" style={{ padding: '10px 20px', fontSize: '0.85rem' }}>{t('series.signup.cta')}</motion.a>
           </motion.div>
+        </div>
+      </section>
+
+      {/* ── TEAMS ───────────────────────────────────────────────────────────── */}
+      <RevealSection id="teams" className="content-section">
+        <div className="section-header">
+          <div className="sub">{t('teams.sub')}</div>
+          <h2>{t('teams.heading')}</h2>
+        </div>
+        <motion.div
+          variants={container} initial="hidden" whileInView="show" viewport={{ once: true, margin: '-50px' }}
+          style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' }}
+        >
+          {TEAMS.map((team, i) => (
+            <motion.div key={i} variants={item} whileHover={{ y: -4 }} className="glass-card" style={{ padding: '32px', position: 'relative', overflow: 'hidden', borderTop: `3px solid ${team.color}` }}>
+              <div style={{ position: 'absolute', top: '-10px', right: '-10px', fontSize: '5rem', fontWeight: 900, fontFamily: 'var(--font-display)', color: team.color, opacity: 0.08, letterSpacing: '-2px' }}>{team.short}</div>
+              <div style={{ display: 'inline-block', background: team.color, color: '#fff', fontFamily: 'var(--font-display)', fontWeight: 900, fontSize: '0.75rem', letterSpacing: '2px', padding: '4px 12px', marginBottom: '16px' }}>{team.short}</div>
+              <h3 style={{ fontSize: '1.4rem', color: '#fff', fontFamily: 'var(--font-display)', letterSpacing: '0.5px', marginBottom: '12px' }}>{team.name}</h3>
+              <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>{t('teams.card.desc')}</p>
+            </motion.div>
+          ))}
+        </motion.div>
+      </RevealSection>
+
+      {/* ── LEAGUE MANAGEMENT ──────────────────────────────────────────────── */}
+      <RevealSection id="management" className="content-section">
+        <div className="section-header">
+          <div className="sub">ASPL ACC KONSOLENLIGA</div>
+          <h2>League <span style={{ color: 'var(--accent-red)' }}>Management</span></h2>
+        </div>
+        <motion.div
+          variants={container} initial="hidden" whileInView="show" viewport={{ once: true, margin: '-50px' }}
+          style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}
+        >
+          {MANAGEMENT.map((member, i) => (
+            <motion.div key={i} variants={item} whileHover={{ y: -4 }} className="glass-card" style={{ padding: '28px', borderTop: '3px solid var(--accent-red)' }}>
+              <div style={{ fontFamily: 'var(--font-display)', fontWeight: 900, fontSize: '1.3rem', color: '#fff', marginBottom: '4px' }}>{member.name}</div>
+              <div style={{ fontSize: '0.7rem', fontWeight: 700, letterSpacing: '2px', color: 'var(--accent-red)', textTransform: 'uppercase', marginBottom: '16px' }}>{member.role}</div>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                {member.duties.map((d, di) => (
+                  <li key={di} style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', paddingLeft: '14px', position: 'relative' }}>
+                    <span style={{ position: 'absolute', left: 0, color: 'var(--accent-red)' }}>•</span>{d}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          ))}
+        </motion.div>
+      </RevealSection>
+
+      {/* ── RACE DAY SCHEDULE ───────────────────────────────────────────────── */}
+      <section id="race-schedule" style={{ background: '#08080b', borderTop: '1px solid var(--border-color)', borderBottom: '1px solid var(--border-color)' }}>
+        <div className="content-section">
+          <motion.div className="section-header" initial="hidden" whileInView="show" viewport={{ once: true }} variants={fadeUp}>
+            <div className="sub">{t('schedule.sub')}</div>
+            <h2>{t('schedule.heading')}</h2>
+          </motion.div>
+          <motion.div
+            variants={container} initial="hidden" whileInView="show" viewport={{ once: true, margin: '-50px' }}
+            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}
+          >
+            {[
+              { data: t('schedule.solo', { returnObjects: true }), color: 'var(--accent-gray)', border: 'var(--border-color)' },
+              { data: t('schedule.team', { returnObjects: true }), color: 'var(--accent-red)',  border: 'var(--accent-red)' },
+            ].map((s, si) => (
+              <motion.div key={si} variants={item} className="glass-card" style={{ overflow: 'hidden', borderTop: `3px solid ${s.border}` }}>
+                <div style={{ padding: '18px 24px', borderBottom: '1px solid var(--border-color)', background: 'rgba(255,255,255,0.02)' }}>
+                  <span style={{ fontFamily: 'var(--font-display)', fontWeight: 900, fontSize: '0.85rem', letterSpacing: '2px', color: '#fff' }}>{s.data.day}</span>
+                </div>
+                <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                  <tbody>
+                    {s.data.rows.map((row, ri) => (
+                      <tr key={ri} style={{ borderBottom: ri < s.data.rows.length - 1 ? '1px solid var(--border-color)' : 'none' }}>
+                        <td style={{ padding: '14px 24px', fontFamily: 'var(--font-display)', fontWeight: 900, fontSize: '1.1rem', color: si === 1 ? 'var(--accent-red)' : '#fff', whiteSpace: 'nowrap', width: '100px' }}>{row.time}</td>
+                        <td style={{ padding: '14px 24px', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>{row.event}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </motion.div>
+            ))}
+          </motion.div>
+          <motion.p initial="hidden" whileInView="show" viewport={{ once: true }} variants={fadeUp}
+            style={{ marginTop: '16px', fontSize: '0.78rem', color: 'var(--text-muted)', textAlign: 'center', letterSpacing: '0.5px' }}
+          >
+            ⏱ {t('schedule.note')}
+          </motion.p>
         </div>
       </section>
 
@@ -387,7 +498,7 @@ function Home() {
             <h2>{t('calendar.heading')}</h2>
           </div>
           <div style={{ display: 'flex', gap: '6px', background: '#0a0a0c', border: '1px solid var(--border-color)', padding: '4px' }}>
-            {['ALL', 'TEAM', 'SOLO', 'ENDURANCE'].map(f => (
+            {['ALL', 'TEAM', 'SOLO'].map(f => (
               <motion.button
                 key={f} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
                 onClick={() => setCalendarFilter(f)}
@@ -399,9 +510,52 @@ function Home() {
           </div>
         </motion.div>
 
+        {/* Data table */}
+        <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={fadeUp} className="glass-card" style={{ overflowX: 'auto', marginBottom: '40px' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: '600px' }}>
+            <thead>
+              <tr style={{ borderBottom: '2px solid var(--border-color)', background: 'rgba(255,255,255,0.02)' }}>
+                {[t('calendar.table.round'), t('calendar.table.track'), t('calendar.table.country'), t('calendar.table.date'), t('calendar.table.time'), t('calendar.table.series')].map(h => (
+                  <th key={h} style={{ padding: '12px 16px', textAlign: 'left', fontFamily: 'var(--font-display)', fontSize: '0.72rem', letterSpacing: '1.5px', color: 'var(--text-muted)', fontWeight: 700 }}>{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              <AnimatePresence>
+                {filteredCalendar.map((race, i) => {
+                  const isPast = Date.parse(`${race.date}T${race.localTime}:00+02:00`) < Date.now();
+                  return (
+                    <motion.tr
+                      key={`${race.date}-${race.series}`}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ delay: i * 0.04 }}
+                      whileHover={{ backgroundColor: 'rgba(225,6,0,0.04)' }}
+                      style={{ borderBottom: '1px solid var(--border-color)', opacity: isPast ? 0.45 : 1 }}
+                    >
+                      <td style={{ padding: '13px 16px', fontFamily: 'var(--font-display)', fontWeight: 900, color: 'var(--text-muted)', fontSize: '0.85rem' }}>R{race.round}</td>
+                      <td style={{ padding: '13px 16px', fontWeight: 700, color: '#fff', fontSize: '0.9rem' }}>{race.track}</td>
+                      <td style={{ padding: '13px 16px', color: 'var(--text-secondary)', fontSize: '0.85rem' }}>{race.country}</td>
+                      <td style={{ padding: '13px 16px', color: 'var(--text-secondary)', fontSize: '0.85rem', whiteSpace: 'nowrap' }}>{race.date}</td>
+                      <td style={{ padding: '13px 16px', fontFamily: 'var(--font-display)', fontWeight: 800, color: race.series === 'TEAM' ? 'var(--accent-red)' : '#fff', fontSize: '0.9rem' }}>{race.localTime}</td>
+                      <td style={{ padding: '13px 16px' }}>
+                        <span style={{ background: race.series === 'TEAM' ? 'rgba(225,6,0,0.15)' : 'rgba(255,255,255,0.07)', border: `1px solid ${race.series === 'TEAM' ? 'var(--accent-red)' : 'var(--border-color)'}`, color: race.series === 'TEAM' ? 'var(--accent-red)' : '#fff', fontSize: '0.65rem', fontWeight: 800, padding: '3px 8px', letterSpacing: '1px', fontFamily: 'var(--font-display)' }}>
+                          {race.series}
+                        </span>
+                      </td>
+                    </motion.tr>
+                  );
+                })}
+              </AnimatePresence>
+            </tbody>
+          </table>
+        </motion.div>
+
+        {/* Calendar images (visual reference) */}
         <motion.div
           variants={container} initial="hidden" whileInView="show" viewport={{ once: true, margin: '-50px' }}
-          style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px', marginBottom: '40px' }}
+          style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}
         >
           {[
             { src: soloCalendarImg, alt: 'ASPL Solo Series Season 2 Race Calendar', label: t('calendar.solo.label'), schedule: t('calendar.solo.schedule'), badgeBg: 'var(--accent-gray)', title: 'SOLO SERIES SEASON 2 RACE CALENDAR' },
@@ -430,8 +584,48 @@ function Home() {
         </motion.div>
       </section>
 
+      {/* ── RULEBOOK ────────────────────────────────────────────────────────── */}
+      <section id="rulebook" style={{ background: '#08080b', borderTop: '1px solid var(--border-color)', borderBottom: '1px solid var(--border-color)' }}>
+        <div className="content-section">
+          <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={fadeUp} className="section-header">
+            <div className="sub">{t('rulebook.sub')}</div>
+            <h2>{t('rulebook.heading')}</h2>
+          </motion.div>
+          <motion.div
+            variants={container} initial="hidden" whileInView="show" viewport={{ once: true, margin: '-50px' }}
+            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}
+          >
+            <motion.div variants={item} className="glass-card" style={{ padding: '36px', borderLeft: '4px solid var(--accent-red)' }}>
+              <div style={{ color: 'var(--accent-red)', marginBottom: '16px' }}><BookOpen size={32} /></div>
+              <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: '24px' }}>{t('rulebook.desc')}</p>
+              <motion.a
+                whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
+                href="#"
+                className="btn-aspl btn-aspl-primary"
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem', padding: '12px 24px' }}
+              >
+                <Download size={16} /> {t('rulebook.download')}
+              </motion.a>
+            </motion.div>
+            <motion.div variants={item} className="glass-card" style={{ padding: '36px' }}>
+              <div style={{ color: 'var(--text-muted)', marginBottom: '16px' }}><ShieldAlert size={32} /></div>
+              <h4 style={{ color: '#fff', fontFamily: 'var(--font-display)', fontSize: '1rem', letterSpacing: '1px', marginBottom: '12px' }}>STEWARDS & PENALTIES</h4>
+              <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: '20px' }}>{t('rulebook.contact')}</p>
+              <motion.a
+                whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
+                href={DISCORD} target="_blank" rel="noopener noreferrer"
+                className="btn-aspl btn-aspl-secondary"
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem', padding: '12px 24px' }}
+              >
+                💬 Open Discord Stewards
+              </motion.a>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* ── STANDINGS ───────────────────────────────────────────────────────── */}
-      <section id="standings" style={{ background: '#08080b', borderTop: '1px solid var(--border-color)', borderBottom: '1px solid var(--border-color)' }}>
+      <section id="standings" style={{ background: 'var(--bg-darker)' }}>
         <div className="content-section">
           <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={fadeUp} className="section-header" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'flex-end', gap: '20px' }}>
             <div>
@@ -576,8 +770,6 @@ function Home() {
                             </motion.div>
                           ))}
                         </motion.div>
-
-                        {/* Summary bar */}
                         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0', borderTop: '1px solid var(--border-color)' }}>
                           {summary.map((s, i) => (
                             <div key={i} style={{ flex: '1 1 100px', textAlign: 'center', padding: '16px 8px', borderRight: i < summary.length - 1 ? '1px solid var(--border-color)' : 'none' }}>
@@ -617,12 +809,13 @@ function Home() {
               <div style={{ position: 'absolute', top: '12px', left: '12px', background: 'var(--accent-red)', color: '#fff', fontSize: '0.65rem', fontWeight: 'bold', padding: '2px 8px', letterSpacing: '1px', display: 'flex', alignItems: 'center', gap: '4px' }}>
                 <span style={{ display: 'inline-block', width: '6px', height: '6px', borderRadius: '50%', background: '#fff', animation: 'pulse 1.2s infinite' }} /> LIVE
               </div>
-              <motion.div
+              <motion.a
+                href={TWITCH} target="_blank" rel="noopener noreferrer"
                 whileHover={{ scale: 1.15 }} whileTap={{ scale: 0.95 }}
-                style={{ width: '56px', height: '56px', borderRadius: '50%', background: 'rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', border: '1px solid #fff', backdropFilter: 'blur(4px)' }}
+                style={{ width: '56px', height: '56px', borderRadius: '50%', background: 'rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', border: '1px solid #fff', backdropFilter: 'blur(4px)', textDecoration: 'none' }}
               >
                 <Play size={22} fill="#fff" />
-              </motion.div>
+              </motion.a>
               <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>{t('media.stream.click')}</p>
             </div>
             <div style={{ marginTop: '16px', fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
@@ -635,10 +828,11 @@ function Home() {
             <h3 style={{ fontSize: '1.25rem', color: '#fff', marginBottom: '16px' }}>{t('media.follow.heading')}</h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
               {[
-                { href: TIKTOK,   icon: <TikTokIcon size={22} />, label: 'TikTok',   handle: '@aspl_acc_liga',        desc: t('media.tiktok.desc'),   color: '#ff0050' },
-                { href: YOUTUBE,  icon: '📹',                     label: 'YouTube',  handle: 'ASPL League',           desc: t('media.youtube.desc'),  color: '#ff0000' },
-                { href: TWITCH,   icon: '📺',                     label: 'Twitch',   handle: 'ASPL TV',               desc: t('media.twitch.desc'),   color: '#9147ff' },
-                { href: DISCORD,  icon: '💬',                     label: 'Discord',  handle: 'discord.gg/cnqnmX8cEm', desc: t('media.discord.desc'), color: '#5865f2' },
+                { href: TIKTOK,    icon: <TikTokIcon size={22} />, label: 'TikTok',    handle: '@aspl_acc_liga',        desc: t('media.tiktok.desc'),    color: '#ff0050' },
+                { href: YOUTUBE,   icon: '📹',                     label: 'YouTube',   handle: 'ASPL League',           desc: t('media.youtube.desc'),   color: '#ff0000' },
+                { href: TWITCH,    icon: '📺',                     label: 'Twitch',    handle: 'ASPL TV',               desc: t('media.twitch.desc'),    color: '#9147ff' },
+                { href: INSTAGRAM, icon: '📸',                     label: 'Instagram', handle: '@aspl_acc_liga',        desc: t('media.instagram.desc'), color: '#e1306c' },
+                { href: DISCORD,   icon: '💬',                     label: 'Discord',   handle: 'discord.gg/cnqnmX8cEm', desc: t('media.discord.desc'),  color: '#5865f2' },
               ].map((s, i) => (
                 <motion.a key={i} href={s.href} target="_blank" rel="noopener noreferrer" whileHover={{ x: 4 }}
                   style={{ display: 'flex', gap: '14px', alignItems: 'center', padding: '12px', background: '#050508', border: '1px solid var(--border-color)', textDecoration: 'none', transition: 'border-color 0.2s' }}
