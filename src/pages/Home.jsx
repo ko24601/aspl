@@ -14,7 +14,7 @@ const DISCORD  = 'https://discord.gg/cnqnmX8cEm';
 const TIKTOK   = 'https://www.tiktok.com/@aspl_acc_liga';
 const TWITCH   = 'https://twitch.tv';
 const YOUTUBE  = 'https://youtube.com';
-const INSTAGRAM = 'https://instagram.com'; // ← update with real handle when confirmed
+const INSTAGRAM = 'https://www.instagram.com/aspl_racing_series';
 
 // ── Shared animation variants ──────────────────────────────────────────────────
 const container = {
@@ -138,14 +138,6 @@ function Home() {
     { name: 'Chronos Academy Motorsport',  short: 'CAM', color: '#0070c0' },
   ];
 
-  const MANAGEMENT = [
-    { name: 'Djlowtom',     role: 'League Owner',                      duties: ['Organisation & Management', 'Discord Administration', 'Driver Support', 'Announcements', 'Support across all areas'] },
-    { name: 'Luke_Mei',     role: 'League Owner',                      duties: ['Weather Reports (weekly)', 'League Support', 'General Assistance'] },
-    { name: 'toxictommy',   role: 'Race Direction & Administration',   duties: ['Rankings & Standings', 'Team Management', 'Race Organisation', 'Driver & Team Coordination', 'News & Communication'] },
-    { name: 'Chillo',       role: 'Community & Driver Support',        duties: ['Community & Member Care', 'Point of Contact for Drivers', 'Support for New Drivers', 'Sim Racing & Wheel Topics'] },
-    { name: 'iCrank',       role: 'Server & Endurance Management',     duties: ['ACC Server & Settings', 'GPortal & Technical Administration', 'Endurance Series Management', 'Technical Support'] },
-    { name: 'Darby',        role: 'Driver Development & Media',        duties: ['Test Races & Driver Evaluation', 'Driver Training Programmes', 'Race Photos, Clips & Highlights', 'Commentary Support'] },
-  ];
 
   useEffect(() => {
     const now = Date.now();
@@ -419,32 +411,6 @@ function Home() {
               <div style={{ display: 'inline-block', background: team.color, color: '#fff', fontFamily: 'var(--font-display)', fontWeight: 900, fontSize: '0.75rem', letterSpacing: '2px', padding: '4px 12px', marginBottom: '16px' }}>{team.short}</div>
               <h3 style={{ fontSize: '1.4rem', color: '#fff', fontFamily: 'var(--font-display)', letterSpacing: '0.5px', marginBottom: '12px' }}>{team.name}</h3>
               <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>{t('teams.card.desc')}</p>
-            </motion.div>
-          ))}
-        </motion.div>
-      </RevealSection>
-
-      {/* ── LEAGUE MANAGEMENT ──────────────────────────────────────────────── */}
-      <RevealSection id="management" className="content-section">
-        <div className="section-header">
-          <div className="sub">ASPL ACC CONSOLE LEAGUE</div>
-          <h2>League <span style={{ color: 'var(--accent-red)' }}>Management</span></h2>
-        </div>
-        <motion.div
-          variants={container} initial="hidden" whileInView="show" viewport={{ once: true, margin: '-50px' }}
-          style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}
-        >
-          {MANAGEMENT.map((member, i) => (
-            <motion.div key={i} variants={item} whileHover={{ y: -4 }} className="glass-card" style={{ padding: '28px', borderTop: '3px solid var(--accent-red)' }}>
-              <div style={{ fontFamily: 'var(--font-display)', fontWeight: 900, fontSize: '1.3rem', color: '#fff', marginBottom: '4px' }}>{member.name}</div>
-              <div style={{ fontSize: '0.7rem', fontWeight: 700, letterSpacing: '2px', color: 'var(--accent-red)', textTransform: 'uppercase', marginBottom: '16px' }}>{member.role}</div>
-              <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                {member.duties.map((d, di) => (
-                  <li key={di} style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', paddingLeft: '14px', position: 'relative' }}>
-                    <span style={{ position: 'absolute', left: 0, color: 'var(--accent-red)' }}>•</span>{d}
-                  </li>
-                ))}
-              </ul>
             </motion.div>
           ))}
         </motion.div>

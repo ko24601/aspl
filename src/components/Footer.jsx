@@ -4,10 +4,11 @@ import { useTranslation } from 'react-i18next';
 import asplLogo from './ASPL_Logo.png';
 import TikTokIcon from './TikTokIcon';
 
-const DISCORD  = 'https://discord.gg/cnqnmX8cEm';
-const TIKTOK   = 'https://www.tiktok.com/@aspl_acc_liga';
-const TWITCH   = 'https://twitch.tv';
-const YOUTUBE  = 'https://youtube.com';
+const DISCORD   = 'https://discord.gg/cnqnmX8cEm';
+const TIKTOK    = 'https://www.tiktok.com/@aspl_acc_liga';
+const TWITCH    = 'https://twitch.tv';
+const YOUTUBE   = 'https://youtube.com';
+const INSTAGRAM = 'https://www.instagram.com/aspl_racing_series';
 
 function FooterLink({ href, children, external }) {
   const style = { transition: 'color 0.2s', color: 'inherit', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '8px' };
@@ -23,7 +24,8 @@ function Footer() {
     { href: DISCORD, icon: '💬', label: t('footer.socials.discord'), color: '#5865f2' },
     { href: TIKTOK,  icon: <TikTokIcon size={16} />, label: t('footer.socials.tiktok'), color: '#ff0050' },
     { href: TWITCH,  icon: '📺', label: t('footer.socials.twitch'), color: '#9147ff' },
-    { href: YOUTUBE, icon: '📹', label: t('footer.socials.youtube'), color: '#ff0000' },
+    { href: YOUTUBE,   icon: '📹', label: t('footer.socials.youtube'),   color: '#ff0000' },
+    { href: INSTAGRAM, icon: '📸', label: t('footer.socials.instagram'), color: '#e1306c' },
   ];
 
   const navLinks = [
@@ -44,7 +46,7 @@ function Footer() {
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
             <img src={asplLogo} alt="ASPL Logo" style={{ height: '36px', filter: 'drop-shadow(0 0 6px rgba(225,6,0,0.4))' }} />
             <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.3rem', fontWeight: 900, letterSpacing: '1px', color: '#fff', lineHeight: 1 }}>
-              ASPL <span style={{ color: 'var(--accent-red)' }}>PRO LEAGUE</span>
+              ADVANCED <span style={{ color: 'var(--accent-red)' }}>SIMRACING PRO LEAGUE</span>
             </div>
           </div>
           <p style={{ fontSize: '0.88rem', lineHeight: 1.7, marginBottom: '20px' }}>
